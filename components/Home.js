@@ -1,12 +1,13 @@
-
-
 import { Text, TouchableOpacity, View, StyleSheet, Image } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Audio } from "expo-av";
 import * as FileSystem from "expo-file-system";
 import { FontAwesome } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
 
-export default function App() {
+
+export default function Home({route, navigation}) {
+  const { user } = route.params;
   const [recording, setRecording] = useState(null);
   const [recordingStatus, setRecordingStatus] = useState("idle");
   const [audioPermission, setAudioPermission] = useState(null);
@@ -120,11 +121,20 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+    <TouchableOpacity onPress={()=>navigation.navigate('Profile',{user:user})} style={{marginBottom:50, textAlign:'start', backgroundColor:'red', color:'white'}}>
+      <Text>Profile</Text>
+    </TouchableOpacity>
+    <View style={{flexDirection:'row'}}>
+    <Text style={{fontSize:30, fontWeight:'bold'}}>Welcome, </Text>
+    <Text style={{marginTop:20}}>{user}</Text>
+    </View>
+    <Text style={{marginTop:30 }}>Start recording</Text>
       <TouchableOpacity style={styles.button} onPress={handleRecordButtonPress}>
         <FontAwesome
           name={recording ? "stop-circle" : "circle"}
           size={64}
           color="white"
+          
         />
 
       </TouchableOpacity>
